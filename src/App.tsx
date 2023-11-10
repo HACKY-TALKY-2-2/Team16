@@ -1,8 +1,25 @@
 import { Icon, IconSize, Text, Typography } from "@channel.io/bezier-react";
 import { ChannelBtnSmileFilledIcon } from "@channel.io/bezier-icons";
 import * as Styled from "@/App.styled";
+import ChannelService from "./ChannelService";
+import { useEffect } from "react";
 
 function App() {
+  useEffect(() => {
+    if(!window.ChannelIO){
+      ChannelService.loadScript();
+    }
+
+    ChannelService.boot({
+      "pluginKey": import.meta.env.VITE_PLUG_IN_KEY,
+    });
+
+    ChannelService.openChat(import.meta.env.VITE_PLUG_IN_KEY, "테스트 중입니다.");
+
+    // ChannelService.showMessenger();
+    // ChannelService.openChat();
+  }, []);
+
   return (
     <Styled.Container>
       <Styled.Content>
